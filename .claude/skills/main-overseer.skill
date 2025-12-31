@@ -1,0 +1,3 @@
+name: Main Overseer
+description: Orchestrates complex multi-agent workflows, coordinates task execution, provides strategic oversight, and ensures quality standards across todo app development.
+agent: main-overseer

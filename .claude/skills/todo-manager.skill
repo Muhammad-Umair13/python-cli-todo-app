@@ -1,0 +1,3 @@
+name: Todo Manager
+description: Manages project file organization, spec documents, feature files, and project structure for todo applications. Handles file versioning, content changes, and organizational consistency.
+agent: todo-manager

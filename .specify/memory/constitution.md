@@ -1,55 +1,121 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+SYNC IMPACT REPORT
+==================
+Version change: NEW (initial creation)
+Added sections:
+- 6 Core Principles (I-VI)
+- Technical Constraints section
+- Development Workflow section
+Removed sections: None (initial creation)
+
+Templates Status:
+- .specify/templates/spec-template.md: ✅ Compatible (no changes needed)
+- .specify/templates/plan-template.md: ✅ Compatible (no changes needed)
+- .specify/templates/tasks-template.md: ✅ Compatible (no changes needed)
+-->
+
+# Todo Application Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec-Driven Development First
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+ALL code MUST be generated from specifications. No manual coding allowed. Every feature follows the pipeline: Constitution → Specify → Plan → Tasks → Implement. Specifications are the single source of truth. Manual implementation without prior specification is prohibited.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**Rationale**: Ensures consistency, traceability, and quality across all development work. Prevents ad-hoc coding that leads to technical debt.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Python Excellence Standard
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+MUST follow PEP 8 style guidelines. Type hints REQUIRED for all function signatures and public APIs. Docstrings REQUIRED for all modules, classes, and functions using Google or NumPy style. No hardcoded secrets or tokens—use environment variables and `.env` files. Imports MUST be sorted according to `isort` conventions.
 
-### [PRINCIPLE_6_NAME]
+**Rationale**: Maintains code readability, enables static analysis, and prevents security vulnerabilities.
 
+### III. TDD Mandatory (NON-NEGOTIABLE)
 
-[PRINCIPLE__DESCRIPTION]
+Test-First Development is REQUIRED: Tests written → User approved → Tests fail → Then implement. Red-Green-Refactor cycle MUST be strictly enforced. Minimum 2 positive tests and 1 negative test per feature. Tests MUST use `pytest` framework with descriptive names.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Rationale**: Ensures code correctness, enables confident refactoring, and documents expected behavior.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. In-Memory Storage Phase 1
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+For Phase 1, storage MUST be in-memory only. Task data persists within session only. Data loss on exit is acceptable for this phase. Auto-incrementing IDs starting from 1 MUST be implemented. Thread-safe design MUST be considered for future evolution.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**Rationale**: Establishes foundation for Phase 2+ evolution without premature complexity.
+
+### V. CLI Interface Standards
+
+MUST use command pattern: `todo <command> [arguments] [options]`. Global help via `todo --help`. Command-specific help via `todo <command> --help`. Output MUST be human-readable with error messages to stderr.
+
+**Rationale**: Provides intuitive, discoverable interface consistent with Unix conventions.
+
+### VI. Measurable Acceptance Criteria
+
+Every feature MUST have 3-5 measurable acceptance criteria. Requirements MUST be testable and verifiable. Edge cases MUST be explicitly documented. Error handling paths MUST be defined for all operations.
+
+**Rationale**: Ensures clear completion criteria and prevents scope creep.
+
+## Technical Constraints
+
+### Data Model Specification
+
+```python
+class Task:
+    id: int                    # Auto-incrementing unique identifier
+    title: str                 # Required (1-200 characters)
+    description: str = ""      # Optional (max 1000 characters)
+    completed: bool = False    # Completion status
+    created_at: datetime       # Automatic timestamp
+    updated_at: datetime       # Update timestamp
+```
+
+### Supported Commands
+
+| Command | Description |
+|---------|-------------|
+| `todo add "Title"` | Add new task |
+| `todo add "Title" -d "Description"` | Add task with description |
+| `todo list` | List all tasks |
+| `todo list --completed` | Filter by completion status |
+| `todo complete <id>` | Mark task complete |
+| `todo update <id> "New title"` | Update task title |
+| `todo delete <id>` | Delete task |
+| `todo --help` | Global help |
+| `todo <command> --help` | Command-specific help |
+
+## Development Workflow
+
+### Phase Pipeline
+
+1. **Constitution** → Project principles and constraints (this document)
+2. **Specify** → Feature specifications with user stories (`.specify/specs/`)
+3. **Plan** → Implementation plans with technical decisions (`.specify/specs/`)
+4. **Tasks** → Executable task list with test cases (`.specify/specs/`)
+5. **Implement** → Red-Green-Refactor development cycle
+
+### Quality Gates
+
+All code changes MUST:
+- Pass linting (flake8, isort, black)
+- Pass type checking (mypy)
+- Have 100% test coverage for new code
+- Include docstrings for all public APIs
+- Reference specification in commit messages
+
+### Code Review Requirements
+
+- Self-review before commit
+- Verify spec compliance
+- Check for anti-patterns
+- Confirm error handling completeness
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other development practices. Amendments require documentation of changes and rationale. Version increments follow Semantic Versioning:
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- **MAJOR**: Backward incompatible principle changes
+- **MINOR**: New principles or expanded guidance
+- **PATCH**: Clarifications and wording fixes
+
+All team members MUST verify compliance with these principles in every pull request.
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-29 | **Last Amended**: 2025-12-29
