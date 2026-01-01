@@ -66,7 +66,8 @@ def handle_add(args: dict[str, Any], service: TaskService) -> int:
         priority = Priority(args.get("priority", "medium"))
         tags = _parse_tags(args.get("tags", ""))
         due_date = _parse_date(args.get("due", ""))
-        recurrence = Recurrence(args.get("repeat", "none"))
+        repeat_value = args.get("repeat", "") or "none"
+        recurrence = Recurrence(repeat_value)
 
         input_data = CreateTaskInput(
             title=args["title"],

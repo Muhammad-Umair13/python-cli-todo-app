@@ -30,37 +30,21 @@ uv pip install -e ".[dev]"
 ### Usage
 
 ```bash
-# Add a task
-todo add "Buy groceries"
+# Run the interactive menu
+python todo_apps/main.py
 
-# Add a task with description
-todo add "Buy groceries" -d "Milk, eggs, bread"
-
-# List all tasks
-todo list
-
-# List only completed tasks
-todo list --completed
-
-# List only pending tasks
-todo list --pending
-
-# Mark a task as complete
-todo complete 1
-
-# Update a task
-todo update 1 "New title" -d "New description"
-
-# Delete a task
-todo delete 1
-
-# Toggle task status
-todo toggle 1
-
-# Get help
-todo --help
-todo add --help
+# Or using UV
+uv run main.py
 ```
+
+The application provides an interactive menu where you can:
+- Add new tasks with title, description, priority, tags, and due dates
+- View all tasks with filtering and sorting options
+- Mark tasks as completed
+- Update existing tasks
+- Delete tasks
+- Search tasks by tags or keywords
+- View statistics
 
 ## Project Structure
 

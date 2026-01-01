@@ -26,204 +26,88 @@ source venv/bin/activate
 pip install -e .
 ```
 
-### Verify Installation
+### Run the Application
 
 ```bash
-todo --help
-```
+# Run the interactive menu
+python todo_apps/main.py
 
-You should see the help output:
-```
-usage: todo [-h] [--version] {add,list,complete,delete,update} ...
-
-Manage your todo list
-
-options:
-  -h, --help            show this help message and exit
-  --version             show program's version number and exit
-
-commands:
-  {add,list,complete,delete,update}
-    add                 Add a new task
-    list                List all tasks
-    complete            Mark a task as complete
-    delete              Delete a task
-    update              Update a task
+# Or using UV
+uv run main.py
 ```
 
 ---
 
 ## Usage Tutorial
 
+The application provides a fully interactive menu system. When you run the application, you'll see:
+
+```
+╔════════════════════════════════════════════╗
+║          📝 TODO APP - MAIN MENU          ║
+╚════════════════════════════════════════════╝
+
+1. ➕ Add New Task
+2. 👀 View Tasks
+3. ✅ Mark Task Complete
+4. 🗑️  Delete Task
+5. ✏️  Update Task
+6. 🔄 Exit
+
+Choose an option (1-6):
+```
+
 ### Adding Tasks
 
-Create your first task:
+1. Select option `1` from the main menu
+2. Enter task title when prompted
+3. Optionally add description, priority, tags, and due date
+4. Your task is created!
 
-```bash
-todo add "Learn Python"
-```
+### Viewing Tasks
 
-Output:
-```
-✓ Task created: [1] Learn Python
-```
-
-Add a task with description:
-
-```bash
-todo add "Buy groceries" -d "Milk, eggs, bread, cheese"
-```
-
-Output:
-```
-✓ Task created: [2] Buy groceries
-```
-
-### Listing Tasks
-
-View all your tasks:
-
-```bash
-todo list
-```
-
-Output:
-```
-ID  | Status     | Title
-----|------------|------------------
-1   | [ ]        | Learn Python
-2   | [ ]        | Buy groceries
-```
-
-View only completed tasks:
-
-```bash
-todo list --completed
-```
-
-Output:
-```
-No completed tasks.
-```
-
-View pending tasks:
-
-```bash
-todo list --pending
-```
+1. Select option `2` from the main menu
+2. Choose filter options (All, Completed, Pending)
+3. Select sorting preferences
+4. View your tasks with colors and priority indicators
 
 ### Completing Tasks
 
-Mark a task as done:
-
-```bash
-todo complete 1
-```
-
-Output:
-```
-✓ Task [1] marked as completed
-```
-
-Verify the status change:
-
-```bash
-todo list
-```
-
-Output:
-```
-ID  | Status     | Title
-----|------------|------------------
-1   | [x]        | Learn Python
-2   | [ ]        | Buy groceries
-```
+1. Select option `3` from the main menu
+2. Enter the task ID to mark as complete
+3. Task status is updated!
 
 ### Updating Tasks
 
-Change a task title:
-
-```bash
-todo update 2 "Buy groceries and household items"
-```
-
-Output:
-```
-✓ Task [2] updated
-```
+1. Select option `5` from the main menu
+2. Enter the task ID to update
+3. Modify title, description, priority, tags, or due date as needed
 
 ### Deleting Tasks
 
-Remove a completed task:
-
-```bash
-todo delete 1
-```
-
-Output:
-```
-✓ Task [1] deleted
-```
-
-Verify deletion:
-
-```bash
-todo list
-```
-
-Output:
-```
-ID  | Status     | Title
-----|------------|------------------
-2   | [ ]        | Buy groceries and household items
-```
+1. Select option `4` from the main menu
+2. Enter the task ID to delete
+3. Task is removed from your list
 
 ---
 
 ## Common Workflows
 
-### Daily Planning Session
+### Daily Task Management
 
-```bash
-# Start fresh - list current tasks
-todo list
+1. Run the application: `python todo_apps/main.py`
+2. Add your daily tasks using the interactive wizard
+3. View tasks to see what's pending
+4. Mark tasks as complete as you finish them
+5. Use the statistics menu to track your progress
 
-# Add new tasks for the day
-todo add "Review pull requests"
-todo add "Team standup meeting" -d "10:00 AM"
-todo add "Complete feature implementation"
+### Features
 
-# Mark completed work
-todo complete 1
-
-# Check remaining work
-todo list --pending
-```
-
-### Getting Help
-
-Global help:
-```bash
-todo --help
-```
-
-Command-specific help:
-```bash
-todo add --help
-```
-
-Output:
-```
-usage: todo add [-h] [-d DESCRIPTION] title
-
-positional arguments:
-  title                 Task title
-
-options:
-  -h, --help            show this help message and exit
-  -d DESCRIPTION, --description DESCRIPTION
-                        Task description
-```
+- **Priority Levels**: Set tasks as high, medium, or low priority
+- **Tags**: Organize tasks with custom tags
+- **Due Dates**: Set deadlines using natural language (e.g., "tomorrow", "next monday")
+- **Search & Filter**: Find tasks by keywords, tags, or status
+- **Statistics**: View completion rates and task summaries
 
 ---
 

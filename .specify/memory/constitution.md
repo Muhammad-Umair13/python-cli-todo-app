@@ -68,19 +68,18 @@ class Task:
     updated_at: datetime       # Update timestamp
 ```
 
-### Supported Commands
+### Application Usage
 
-| Command | Description |
-|---------|-------------|
-| `todo add "Title"` | Add new task |
-| `todo add "Title" -d "Description"` | Add task with description |
-| `todo list` | List all tasks |
-| `todo list --completed` | Filter by completion status |
-| `todo complete <id>` | Mark task complete |
-| `todo update <id> "New title"` | Update task title |
-| `todo delete <id>` | Delete task |
-| `todo --help` | Global help |
-| `todo <command> --help` | Command-specific help |
+The application provides a fully interactive menu-driven interface:
+
+- Run with: `python todo_apps/main.py` or `uv run main.py`
+- Features include:
+  - Add tasks with title, description, priority, tags, and due dates
+  - View/filter/sort tasks by multiple criteria
+  - Mark tasks as completed
+  - Update and delete tasks
+  - Search by keywords and tags
+  - View statistics and completion rates
 
 ## Development Workflow
 
